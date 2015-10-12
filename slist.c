@@ -11,6 +11,8 @@ typedef struct list_item {
 #define LIST_ENTRY(ptr, type, member) \
 	((type *)((char *)(ptr)-(unsigned long)(&((type *)0)->member)))
 
+#define LIST_HEAD(LIST_NAME) LIST_NAME##_HEAD
+
 struct foo {
 	int val;
 	LIST_ITEM list;
@@ -67,11 +69,11 @@ int main()
 	for (i = 0; i < 10; i++) {
 		pfoo = (struct foo *) malloc(sizeof(struct foo));
 		pfoo->val = i + 100;
-		add_list_item(&pfoo->list, &FOO_HEAD);
+		add_list_item(&pfoo->list, &LIST_HEAD(FOO));
 	}
 	
-	visit_list_item(FOO_HEAD);
-	reverse_list_item(&FOO_HEAD);
-	visit_list_item(FOO_HEAD);
+	visit_list_item(LIST_HEAD(FOO));
+	reverse_list_item(&LIST_HEAD(FOO));
+	visit_list_item(LIST_HEAD(FOO));
 
 }
